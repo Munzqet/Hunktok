@@ -31,13 +31,13 @@ var questions = [
 ];
 
 // Funzione per caricare una domanda casuale
+  int rispostecorrette = 0;
 function loadQuestion() {
   var quiz = document.getElementById("quiz");
   var randomIndex = Math.floor(Math.random() * questions.length);
   var randomQuestion = questions[randomIndex];
   var questionHTML = "<div class='question'>" + randomQuestion.question + "</div>";
   var optionsHTML = "<ul class='options'>";
-
   randomQuestion.options.forEach(function(option) {
     optionsHTML += "<li><label><input type='radio' name='answer' value='" + option + "'>" + option + "</label></li>";
   });
@@ -61,10 +61,13 @@ function checkAnswer() {
   }).answer;
 
   if (userAnswer === correctAnswer) {
+    rispostecorrette++;
     alert("Risposta corretta!");
   } else {
     alert("Risposta sbagliata. La risposta corretta è: " + correctAnswer);
   }
+<button onclick="nextQuestion()">Domanda Successiva</button>
+<button onclick="finishQuiz()">Termina Quiz</button>
 
   // Carica una nuova domanda dopo 1 secondo
   setTimeout(loadQuestion, 1000);
