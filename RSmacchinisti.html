@@ -1,23 +1,77 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <title class="nome">QuizFer</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuizFer</title>
 </head>
 <body>
-    <h1 class="titolo">Esercizi RS</h1>
-    <form action="Result" method="post">
-        <%@ page import="your.package.name.MultipleChoiceQuiz.Question" %>
-        <% List<Question> questions = (List<Question>) request.getAttribute("questions");
-           for (int i = 0; i < questions.size(); i++) { %>
-            <h3>Domanda <%= i+1 %>:</h3>
-            <p><%= questions.get(i).question %></p>
-            <% List<String> options = questions.get(i).options;
-               for (int j = 0; j < options.size(); j++) { %>
-                <input type="radio" name="answer<%= i %>" value="<%= j %>"><%= options.get(j) %><br>
-            <% } %>
-        <% } %>
-        <input type="submit" value="Invia">
-    </form>
+<h1 class="titolo">Esercizi RS</h1>
+<div id="quiz">
+</div>
+
+<script>
+// Array di domande con risposte
+var questions = [
+  {
+    question: "Quanto fa 2 + 2?",
+    options: ["3", "4", "5", "6"],
+    answer: "4"
+  },
+  {
+    question: "Qual è la capitale dell'Italia?",
+    options: ["Roma", "Milano", "Firenze", "Napoli"],
+    answer: "Roma"
+  },
+  {
+    question: "Quale pianeta è più vicino al Sole?",
+    options: ["Terra", "Venere", "Mercurio", "Marte"],
+    answer: "Mercurio"
+  }
+];
+
+// Funzione per caricare una domanda casuale
+function loadQuestion() {
+  var quiz = document.getElementById("quiz");
+  var randomIndex = Math.floor(Math.random() * questions.length);
+  var randomQuestion = questions[randomIndex];
+  var questionHTML = "<div class='question'>" + randomQuestion.question + "</div>";
+  var optionsHTML = "<ul class='options'>";
+
+  randomQuestion.options.forEach(function(option) {
+    optionsHTML += "<li><label><input type='radio' name='answer' value='" + option + "'>" + option + "</label></li>";
+  });
+
+  optionsHTML += "</ul>";
+
+  quiz.innerHTML = questionHTML + optionsHTML;
+}
+
+// Funzione per verificare la risposta
+function checkAnswer() {
+  var selectedOption = document.querySelector('input[name="answer"]:checked');
+  if (!selectedOption) {
+    alert("Seleziona una risposta.");
+    return;
+  }
+
+  var userAnswer = selectedOption.value;
+  var correctAnswer = questions.find(function(question) {
+    return question.question === document.querySelector('.question').textContent;
+  }).answer;
+
+  if (userAnswer === correctAnswer) {
+    alert("Risposta corretta!");
+  } else {
+    alert("Risposta sbagliata. La risposta corretta è: " + correctAnswer);
+  }
+
+  // Carica una nuova domanda dopo 1 secondo
+  setTimeout(loadQuestion, 1000);
+}
+
+// Carica la prima domanda all'avvio
+loadQuestion();
+</script>
 </body>
 </html>
