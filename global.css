@@ -1,7 +1,9 @@
 .nome {
   color: white;
+  background-color: red;
   font-family: arial;
   text-align: center;
+  visited: white; 
 }
 .titolo {
   font-family: arial;
@@ -9,5 +11,5 @@
 }
 .elenco {
   font-family: arial;
-  margin-left: 7px;
+  margin-left: 6px;
 }
