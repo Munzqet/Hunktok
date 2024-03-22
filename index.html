@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .question {
+            margin-bottom: 10px;
+        }
+        button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Quiz</h1>
+    <div id="quiz">
+        <!-- Qui verranno inserite le domande dinamicamente tramite JavaScript -->
+    </div>
+    <button onclick="submitQuiz()">Invia quiz</button>
+</div>
+
+<script>
+    var questions = [
+        { 
+            question: "Qual è la capitale dell'Italia?",
+            answers: ["Roma", "Milano", "Napoli", "Torino"],
+            correctAnswer: "Roma"
+        },
+        { 
+            question: "Quanto è lungo il fiume più lungo del mondo, il Nilo? (in chilometri)",
+            answers: ["5500", "6000", "6650", "7000"],
+            correctAnswer: "6650"
+        },
+        { 
+            question: "Chi ha dipinto la Gioconda?",
+            answers: ["Michelangelo", "Leonardo da Vinci", "Raffaello", "Caravaggio"],
+            correctAnswer: "Leonardo da Vinci"
+        },
+        { 
+            question: "Quale pianeta è conosciuto come il 'Pianeta Rosso'?",
+            answers: ["Marte", "Giove", "Venere", "Saturno"],
+            correctAnswer: "Marte"
+        },
+        { 
+            question: "Quanti continenti ci sono sulla Terra?",
+            answers: ["5", "6", "7", "8"],
+            correctAnswer: "7"
+        }
+    ];
+
+    function generateQuiz() {
+        var quizContainer = document.getElementById('quiz');
+        questions.forEach(function(question, index) {
+            var questionElement = document.createElement('div');
+            questionElement.classList.add('question');
+            questionElement.innerHTML = '<h3>Domanda ' + (index + 1) + ': ' + question.question + '</h3>';
+            question.answers.forEach(function(answer) {
+                var answerElement = document.createElement('input');
+                answerElement.type = 'radio';
+                answerElement.name = 'question' + index;
+                answerElement.value = answer;
+                var labelElement = document.createElement('label');
+                labelElement.textContent = answer;
+                questionElement.appendChild(answerElement);
+                questionElement.appendChild(labelElement);
+                questionElement.appendChild(document.createElement('br'));
+            });
+            quizContainer.appendChild(questionElement);
+        });
+    }
+
+    function submitQuiz() {
+        var correctAnswers = 0;
+        questions.forEach(function(question, index) {
+            var selectedAnswer = document.querySelector('input[name="question' + index + '"]:checked');
+            if (selectedAnswer && selectedAnswer.value === question.correctAnswer) {
+                correctAnswers++;
+            }
+        });
+        alert('Il tuo punteggio finale è: ' + correctAnswers + '/' + questions.length);
+    }
+
+    generateQuiz();
+</script>
+
+</body>
+</html>
