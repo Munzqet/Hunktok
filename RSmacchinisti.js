@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 
 public class MultipleChoiceQuiz {
@@ -24,13 +23,12 @@ public class MultipleChoiceQuiz {
         questions.add(new Question("Qual è la capitale dell'Italia?", List.of("Roma", "Milano", "Firenze", "Napoli"), 0));
         questions.add(new Question("Quale pianeta è più vicino al Sole?", List.of("Terra", "Venere", "Mercurio", "Marte"), 2));
 
-        Random random = new Random();
-        Scanner scanner = new Scanner(System.in);
-
-        int correctAnswers = 0;
-        int totalQuestions = questions.size();
-
         Collections.shuffle(questions);
+
+        Scanner scanner = new Scanner(System.in);
+        int correctAnswers = 0;
+
+        System.out.println("Benvenuto al quiz!");
 
         for (Question question : questions) {
             System.out.println(question.question);
@@ -57,6 +55,6 @@ public class MultipleChoiceQuiz {
             System.out.println();
         }
 
-        System.out.println("Hai risposto correttamente a " + correctAnswers + " domande su " + totalQuestions + ".");
+        System.out.println("Hai risposto correttamente a " + correctAnswers + " domande su " + questions.size() + ".");
     }
 }
