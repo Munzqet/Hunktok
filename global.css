@@ -1,32 +1,13 @@
-body {
-  font-size: 15px;
-  color: #570700;
-  font-family: Arial;
-  font-weight: normal;
-  margin: 0;
-  background-color: white;
-  font-family: Arial, Helvetica, serif;
+.nome {
+  color: white;
+  font-family: arial;
+  text-align: center;
 }
-.navbar {
-  z-index: 1;
-  background-color: #ff0000;
-  font-family: Arial;
-  position: center;
-  top: 0;
-  min-height: 57px;
-nav ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+.titolo {
+  font-family: arial;
+  margin-left: 5px;
 }
-nav li {
-  display: inline;
-  margin-right: 10px;
-}
-nav a {
-  text-decoration: none;
-  color: #333;
-}
-nav a:hover {
-  color: #007bff;
+.elenco {
+  font-family: arial;
+  margin-left: 7px;
 }
