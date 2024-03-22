@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title class="nome">QuizFer</title>
+</head>
+<body>
+    <h1 class="titolo">Esercizi RS</h1>
+    <form action="Result" method="post">
+        <%@ page import="your.package.name.MultipleChoiceQuiz.Question" %>
+        <% List<Question> questions = (List<Question>) request.getAttribute("questions");
+           for (int i = 0; i < questions.size(); i++) { %>
+            <h3>Domanda <%= i+1 %>:</h3>
+            <p><%= questions.get(i).question %></p>
+            <% List<String> options = questions.get(i).options;
+               for (int j = 0; j < options.size(); j++) { %>
+                <input type="radio" name="answer<%= i %>" value="<%= j %>"><%= options.get(j) %><br>
+            <% } %>
+        <% } %>
+        <input type="submit" value="Invia">
+    </form>
+</body>
+</html>
