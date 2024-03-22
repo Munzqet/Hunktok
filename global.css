@@ -6,11 +6,11 @@
 }
 .titolo {
   font-family: arial;
-  margin-left: 5px;
+  margin-left: 3%;
 }
 .elenco {
   font-family: arial;
-  margin-left: 6px;
+  margin-left: 4%;
 }
 a {
   hover: gray;
