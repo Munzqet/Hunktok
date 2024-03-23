@@ -6,6 +6,7 @@
 }
 .nome a,
 .nome a:visited {
+    text-align: center;
     color: #ffffff;
     text-decoration: none;
 }
