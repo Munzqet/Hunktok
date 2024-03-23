@@ -9,7 +9,10 @@
     <h1>Quiz di Domande Casuali</h1>
     <div id="quiz"></div>
     <button onclick="checkAnswer()">Verifica Risposta</button>
+    <button onclick="endQuiz()">Termina Quiz</button>
     <button onclick="showAnswers()">Mostra Risposte</button>
+    <div id="score" style="display: none;"></div>
+    <div id="answers" style="display: none;"></div>
     
     <script type="text/javascript">
         var questions = [
@@ -33,8 +36,11 @@
         var currentQuestionIndex = 0;
         var correctAnswers = 0;
         var totalQuestions = questions.length;
+        var quizEnded = false;
 
         function loadQuestion() {
+            if (quizEnded) return;
+            
             var quizDiv = document.getElementById("quiz");
             quizDiv.innerHTML = "";
 
@@ -54,25 +60,40 @@
         }
 
         function checkUserAnswer(userAnswer) {
+            if (quizEnded) return;
+            
             var currentQuestion = questions[currentQuestionIndex];
             if (userAnswer === currentQuestion.answer) {
                 correctAnswers++;
-            } else {
             }
             currentQuestionIndex++;
             if (currentQuestionIndex < totalQuestions) {
                 loadQuestion();
             } else {
-                alert("Hai risposto correttamente a " + correctAnswers + " domande su " + totalQuestions + ".");
+                showScore();
             }
         }
 
+        function showScore() {
+            var scoreDiv = document.getElementById("score");
+            scoreDiv.textContent = "Hai risposto correttamente a " + correctAnswers + " domande su " + totalQuestions + ".";
+            scoreDiv.style.display = "block";
+            showAnswers();
+        }
+
         function showAnswers() {
-            var answersString = "";
+            var answersDiv = document.getElementById("answers");
+            var answersString = "<h2>Risposte Corrette:</h2>";
             questions.forEach(function(question) {
-                answersString += question.question + ": " + question.answer + "\n";
+                answersString += "<p><strong>" + question.question + "</strong>: " + question.answer + "</p>";
             });
-            text("Ecco le risposte corrette:\n\n" + answersString);
+            answersDiv.innerHTML = answersString;
+            answersDiv.style.display = "block";
+        }
+
+        function endQuiz() {
+            quizEnded = true;
+            showScore();
         }
 
         loadQuestion();
