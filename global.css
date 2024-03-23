@@ -13,6 +13,7 @@ ul, li {
     text-decoration: none;
 }
 .titolo {
+  text-align: center;
   font-family: arial;
   margin-left: 3%;
   text-decoration: none;
