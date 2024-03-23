@@ -73,7 +73,7 @@
         <h3 class="titolo">QuizFer per il RS</h3>
         <div id="quiz"></div>
         <div class="button-container">
-            <button class="quiz-button" onclick="endQuiz()">Termina Quiz</button>
+            <button id="quizButton" class="quiz-button" onclick="handleButtonClick()">Inizia Quiz</button>
         </div>
         <div id="score" style="display: none;"></div>
         <div id="answers" style="display: none;"></div>
@@ -145,7 +145,6 @@
                 loadQuestion();
             } else {
                 showScore();
-                loadQuestion();
             }
         };
 
@@ -154,6 +153,8 @@
             scoreDiv.textContent = `Hai risposto correttamente a ${correctAnswers} domande su ${totalQuestions}.`;
             scoreDiv.style.display = "block";
             showAnswers();
+            document.getElementById("quizButton").textContent = "Riavvia Quiz";
+            quizEnded = true;
         };
 
         const showAnswers = () => {
@@ -171,13 +172,26 @@
             answersDiv.style.display = "block";
         };
 
-        const endQuiz = () => {
-            quizEnded = true;
-            totalQuestions = userAnswers.length;
-            showScore();
+        const handleButtonClick = () => {
+            if (quizEnded) {
+                restartQuiz();
+            } else {
+                loadQuestion();
+                document.getElementById("quizButton").textContent = "Prossima Domanda";
+            }
         };
 
-        loadQuestion();
+        const restartQuiz = () => {
+            currentQuestionIndex = 0;
+            correctAnswers = 0;
+            userAnswers = [];
+            totalQuestions = questions.length;
+            document.getElementById("quizButton").textContent = "Inizia Quiz";
+            document.getElementById("score").style.display = "none";
+            document.getElementById("answers").style.display = "none";
+            quizEnded = false;
+            loadQuestion();
+        };
     </script>
 </body>
 </html>
