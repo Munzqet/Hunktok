@@ -167,7 +167,8 @@
             userAnswers.forEach(userAnswer => {
                 const question = questions.find(q => q.question === userAnswer.question);
                 if (question) {
-                    const answerClass = userAnswer.userAnswer !== question.answer ? " class='incorrect'" : "";
+                    const answerClass = userAnswer.userAnswer !== question.answer
+? " class='incorrect'" : "";
                     const userWrongClass = userAnswer.userAnswer !== question.answer ? " class='user-wrong'" : "";
                     answersString += `<p${answerClass}><strong>${userAnswer.question}</strong>: ${question.answer}${userAnswer.userAnswer !== question.answer ? ` (Hai risposto erroneamente: <span${userWrongClass}>${userAnswer.userAnswer}</span>)` : ""}</p>`;
                 }
@@ -176,8 +177,7 @@
             answersDiv.style.display = "block";
         };
 
-        const startQuiz
-= () => {
+        const startQuiz = () => {
             quizEnded = false;
             currentQuestionIndex = 0;
             correctAnswers = 0;
@@ -210,80 +210,6 @@
             document.getElementById("answers").style.display = "none";
         };
 
-        const loadQuestion = () => {
-            if (quizEnded) return;
-            
-            const quizDiv = document.getElementById("quiz");
-            quizDiv.innerHTML = "";
-
-            const currentQuestion = questions[currentQuestionIndex];
-            const questionElement = document.createElement("div");
-            questionElement.textContent = currentQuestion.question;
-            quizDiv.appendChild(questionElement);
-
-            currentQuestion.options.forEach(option => {
-                const optionElement = document.createElement("button");
-                optionElement.textContent = option;
-                optionElement.classList.add("quiz-button");
-                optionElement.onclick = () => checkUserAnswer(option);
-                quizDiv.appendChild(optionElement);
-            });
-        };
-
-        const checkUserAnswer = userAnswer => {
-            if (quizEnded) return;
-            
-            const currentQuestion = questions[currentQuestionIndex];
-            userAnswers.push({question: currentQuestion.question, userAnswer});
-            if (userAnswer === currentQuestion.answer) {
-                correctAnswers++;
-            }
-            currentQuestionIndex++;
-            if (currentQuestionIndex < totalQuestions) {
-                loadQuestion();
-            } else {
-                showScore();
-            }
-        };
-
-        const showScore = () => {
-            const scoreDiv = document.getElementById("score");
-            scoreDiv.textContent = `Hai risposto correttamente a ${correctAnswers} domande su ${totalQuestions}.`;
-            scoreDiv.style.display = "block";
-            showAnswers();
-            document.getElementById("endButton").style.display = "none";
-            document.getElementById("startButton").style.display = "none";
-            document.getElementById("restartButton").style.display = "inline-block";
-        };
-
-        const showAnswers = () => {
-            const answersDiv = document.getElementById("answers");
-            let answersString = "<h2>Risposte Corrette:</h2>";
-            userAnswers.forEach(userAnswer => {
-                const question = questions.find(q => q.question === userAnswer.question);
-                if (question) {
-                    const answerClass = userAnswer.userAnswer !== question.answer ? " class='incorrect'" : "";
-                    const userWrongClass = userAnswer.userAnswer !== question.answer ? " class='user-wrong'" : "";
-                    answersString += `<p${answerClass}><strong>${userAnswer.question}</strong>: ${question.answer}${userAnswer.userAnswer !== question.answer ? ` (Hai risposto erroneamente: <span${userWrongClass}>${userAnswer.userAnswer}</span>)` : ""}</p>`;
-                }
-            });
-            answersDiv.innerHTML = answersString;
-            answersDiv.style.display = "block";
-        };
-
-        const startQuiz = () => {
-            quizEnded = false;
-            currentQuestionIndex = 0;
-            correctAnswers = 0;
-            userAnswers = [];
-            shuffleArray(questions);
-            loadQuestion();
-            document.getElementById("startButton").style.display = "none";
-            document.getElementById("endButton").style.display = "inline-block";
-            document.getElementById("restartButton").style.display = "none";
-            document.getElementById("score").style.display = "none";
-            document.getElementById("answers").style.display = "none";
-        };
     </script>
 </body>
 </html>
