@@ -7,6 +7,9 @@
 </head>
 <body>
     <h1>Quiz di Domande Casuali</h1>
+    <div id="quiz"></div>
+    <button onclick="checkAnswer()">Verifica Risposta</button>
+    <button onclick="showAnswers()">Mostra Risposte</button>
     
     <script type="text/javascript">
         var questions = [
@@ -27,43 +30,54 @@
             }
         ];
 
+        var currentQuestionIndex = 0;
         var correctAnswers = 0;
         var totalQuestions = questions.length;
-        var showAnswers = false;
 
-        for (var i = 0; i < totalQuestions; i++) {
-            var question = questions[i];
-            console.log(question.question);
-            console.log(question.options);
-            var userInput = prompt(question.question + "\n" + question.options.join("\n") + "\nInserisci il numero corrispondente alla risposta (o premi 'q' per terminare il quiz):");
+        function loadQuestion() {
+            var quizDiv = document.getElementById("quiz");
+            quizDiv.innerHTML = "";
 
-            if (userInput === null || userInput.trim().toLowerCase() === "q") {
-                showAnswers = true;
-                break;
-            }
+            var currentQuestion = questions[currentQuestionIndex];
+            var questionElement = document.createElement("div");
+            questionElement.textContent = currentQuestion.question;
+            quizDiv.appendChild(questionElement);
 
-            var userChoice = parseInt(userInput);
-            if (!isNaN(userChoice) && userChoice >= 1 && userChoice <= question.options.length) {
-                var userAnswer = question.options[userChoice - 1];
-                if (userAnswer === question.answer) {
-                    correctAnswers++;
-                } else {
-                }
+            currentQuestion.options.forEach(function(option, index) {
+                var optionElement = document.createElement("button");
+                optionElement.textContent = option;
+                optionElement.onclick = function() {
+                    checkUserAnswer(option);
+                };
+                quizDiv.appendChild(optionElement);
+            });
+        }
+
+        function checkUserAnswer(userAnswer) {
+            var currentQuestion = questions[currentQuestionIndex];
+            if (userAnswer === currentQuestion.answer) {
+                correctAnswers++;
+                alert("Risposta corretta!");
             } else {
-                console.log("Scelta non valida.");
+                alert("Risposta sbagliata. La risposta corretta è: " + currentQuestion.answer);
             }
-            console.log("");
-        }
-
-        console.log("Hai risposto correttamente a " + correctAnswers + " domande su " + totalQuestions + ".");
-
-        if (showAnswers) {
-            console.log("Ecco le risposte corrette:");
-            for (var j = 0; j < totalQuestions; j++) {
-                var q = questions[j];
-                console.log(q.question + ": " + q.answer);
+            currentQuestionIndex++;
+            if (currentQuestionIndex < totalQuestions) {
+                loadQuestion();
+            } else {
+                alert("Hai risposto correttamente a " + correctAnswers + " domande su " + totalQuestions + ".");
             }
         }
+
+        function showAnswers() {
+            var answersString = "";
+            questions.forEach(function(question) {
+                answersString += question.question + ": " + question.answer + "\n";
+            });
+            alert("Ecco le risposte corrette:\n\n" + answersString);
+        }
+
+        loadQuestion();
     </script>
 </body>
 </html>
