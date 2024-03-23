@@ -3,15 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz di Domande Casuali</title>
+    <link rel="stylesheet" href="global.css">
+    <title>QuizFer</title>
     <style>
         .incorrect {
             color: red;
         }
+        .user-wrong {
+            color: blue;
+        }
     </style>
 </head>
 <body>
-    <h1>Quiz di Domande Casuali</h1>
+    <h1 class="titolo" >QuizFer per il RS</h1>
     <div id="quiz"></div>
     <button onclick="endQuiz()">Termina Quiz</button>
     <div id="score" style="display: none;"></div>
@@ -93,8 +97,13 @@
                 var userAnswer = userAnswers.find(function(ans) {
                     return ans.question === question.question;
                 });
-                var answerClass = userAnswer && userAnswer.userAnswer !== question.answer ? " class='incorrect'" : "";
-                answersString += "<p" + answerClass + "><strong>" + question.question + "</strong>: " + question.answer + "</p>";
+                var answerClass = "";
+                if (userAnswer) {
+                    answerClass = userAnswer.userAnswer !== question.answer ? " class='incorrect'" : "";
+                    answersString += "<p" + answerClass + "><strong>" + question.question + "</strong>: " + question.answer + (userAnswer.userAnswer !== question.answer ? " (Hai risposto erroneamente: <span class='user-wrong'>" + userAnswer.userAnswer + "</span>)" : "") + "</p>";
+                } else {
+                    answersString += "<p><strong>" + question.question + "</strong>: " + question.answer + "</p>";
+                }
             });
             answersDiv.innerHTML = answersString;
             answersDiv.style.display = "block";
