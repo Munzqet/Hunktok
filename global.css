@@ -1,7 +1,11 @@
+.nome {
+    text-align: center;
+    background-color: #e83f15;
+    padding: 12px 0;
+}
 .nome a,
 .nome a:visited {
     color: #ffffff;
-    background-color: #e83f15;
     text-decoration: none;
 }
 .titolo {
