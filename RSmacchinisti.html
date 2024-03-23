@@ -33,7 +33,7 @@
             margin-top: 1px; /* Aggiunto margine tra i pulsanti */
             border: none;
             border-radius: 5px;
-            background-color: ##bbbdbd;
+            background-color: ##8d8f8f;
             color: white;
             text-align: center;
             text-decoration: none;
@@ -45,7 +45,7 @@
         }
 
         .quiz-button:hover {
-            background-color: ##bbbdbd;
+            background-color: #8d8f8f;
         }
 
         .button-container {
@@ -63,6 +63,11 @@
 
         .user-wrong {
             color: blue;
+        }
+        .score-text {
+            text-decoration: underline;
+            display: block;
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -153,7 +158,7 @@
 
         const showScore = () => {
             const scoreDiv = document.getElementById("score");
-            scoreDiv.textContent = `Hai risposto correttamente a ${correctAnswers} domande su ${totalQuestions}.`;
+            scoreDiv.innerHTML = `<span class="score-text"> Hai risposto correttamente a ${correctAnswers} domande su ${totalQuestions}.</span>`;
             scoreDiv.style.display = "block";
             showAnswers();
             document.getElementById("endButton").style.display = "none";
