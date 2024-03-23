@@ -73,7 +73,9 @@
         <h3 class="titolo">QuizFer per il RS</h3>
         <div id="quiz"></div>
         <div class="button-container">
-            <button id="quizButton" class="quiz-button" onclick="handleButtonClick()">Inizia Quiz</button>
+            <button id="startButton" class="quiz-button" onclick="startQuiz()">Inizia Quiz</button>
+            <button id="endButton" class="quiz-button" onclick="endQuiz()" style="display: none;">Termina Quiz</button>
+            <button id="restartButton" class="quiz-button" onclick="restartQuiz()" style="display: none;">Riavvia Quiz</button>
         </div>
         <div id="score" style="display: none;"></div>
         <div id="answers" style="display: none;"></div>
@@ -153,8 +155,9 @@
             scoreDiv.textContent = `Hai risposto correttamente a ${correctAnswers} domande su ${totalQuestions}.`;
             scoreDiv.style.display = "block";
             showAnswers();
-            document.getElementById("quizButton").textContent = "Riavvia Quiz";
-            quizEnded = true;
+            document.getElementById("endButton").style.display = "none";
+            document.getElementById("startButton").style.display = "none";
+            document.getElementById("restartButton").style.display = "inline-block";
         };
 
         const showAnswers = () => {
@@ -172,13 +175,15 @@
             answersDiv.style.display = "block";
         };
 
-        const handleButtonClick = () => {
-            if (quizEnded) {
-                restartQuiz();
-            } else {
-                loadQuestion();
-                document.getElementById("quizButton").textContent = "Prossima Domanda";
-            }
+        const startQuiz = () => {
+            document.getElementById("startButton").style.display = "none";
+            document.getElementById("endButton").style.display = "inline-block";
+            loadQuestion();
+        };
+
+        const endQuiz = () => {
+            quizEnded = true;
+            showScore();
         };
 
         const restartQuiz = () => {
@@ -186,11 +191,11 @@
             correctAnswers = 0;
             userAnswers = [];
             totalQuestions = questions.length;
-            document.getElementById("quizButton").textContent = "Inizia Quiz";
+            quizEnded = false;
+            document.getElementById("restartButton").style.display = "none";
             document.getElementById("score").style.display = "none";
             document.getElementById("answers").style.display = "none";
-            quizEnded = false;
-            loadQuestion();
+            document.getElementById("startButton").style.display = "inline-block";
         };
     </script>
 </body>
