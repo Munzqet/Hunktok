@@ -51,4 +51,7 @@ ul.special {
 ul.spaced li {
     margin-bottom: 20px;
 }
+.container {
+    text-align: center;
+}
 
