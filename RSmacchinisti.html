@@ -154,3 +154,40 @@
             } else {
                 showScore();
            
+            loadQuestion();
+        }
+
+        function showScore() {
+            var scoreDiv = document.getElementById("score");
+            scoreDiv.textContent = "Hai risposto correttamente a " + correctAnswers + " domande su " + totalQuestions + ".";
+            scoreDiv.style.display = "block";
+            showAnswers();
+        }
+
+        function showAnswers() {
+            var answersDiv = document.getElementById("answers");
+            var answersString = "<h2>Risposte Corrette:</h2>";
+            userAnswers.forEach(function(userAnswer) {
+                var question = questions.find(function(question) {
+                    return question.question === userAnswer.question;
+                });
+                if (question) {
+                    var answerClass = userAnswer.userAnswer !== question.answer ? " class='incorrect'" : "";
+                    var userWrongClass = userAnswer.userAnswer !== question.answer ? " class='user-wrong'" : "";
+                    answersString += "<p" + answerClass + "><strong>" + userAnswer.question + "</strong>: " + question.answer + (userAnswer.userAnswer !== question.answer ? " (Hai risposto erroneamente: <span" + userWrongClass + ">" + userAnswer.userAnswer + "</span>)" : "") + "</p>";
+                }
+            });
+            answersDiv.innerHTML = answersString;
+            answersDiv.style.display = "block";
+        }
+
+        function endQuiz() {
+            quizEnded = true;
+            totalQuestions = userAnswers.length; // Aggiorna il numero totale di domande al numero di domande svolte dall'utente
+            showScore();
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
