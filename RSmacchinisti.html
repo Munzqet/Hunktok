@@ -57,9 +57,7 @@
             var currentQuestion = questions[currentQuestionIndex];
             if (userAnswer === currentQuestion.answer) {
                 correctAnswers++;
-                alert("Risposta corretta!");
             } else {
-                alert("Risposta sbagliata. La risposta corretta è: " + currentQuestion.answer);
             }
             currentQuestionIndex++;
             if (currentQuestionIndex < totalQuestions) {
@@ -74,7 +72,7 @@
             questions.forEach(function(question) {
                 answersString += question.question + ": " + question.answer + "\n";
             });
-            alert("Ecco le risposte corrette:\n\n" + answersString);
+            text("Ecco le risposte corrette:\n\n" + answersString);
         }
 
         loadQuestion();
