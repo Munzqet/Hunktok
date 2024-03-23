@@ -1,19 +1,15 @@
-.nome {
-  color: white;
-  background-color: red;
-  font-family: arial;
-  text-align: center;
+.nome a,
+.nome a:visited {
+    color: #ffffff;
+    text-decoration: none;
 }
 .titolo {
   font-family: arial;
   margin-left: 3%;
+  text-decoration: none;
 }
 .elenco {
   font-family: arial;
   margin-left: 4%;
-}
-a {
-  hover: gray;
-  active: gray;
-  visited: white;
+  text-decoration: none;
 }
