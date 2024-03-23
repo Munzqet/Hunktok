@@ -30,8 +30,7 @@ var questions = [
   }
 ];
 
-// Funzione per caricare una domanda casuale
-  int rispostecorrette = 0;
+// Funzione per caricare una domanda casuali
 function loadQuestion() {
   var quiz = document.getElementById("quiz");
   var randomIndex = Math.floor(Math.random() * questions.length);
@@ -61,7 +60,6 @@ function checkAnswer() {
   }).answer;
 
   if (userAnswer === correctAnswer) {
-    rispostecorrette++;
     alert("Risposta corretta!");
   } else {
     alert("Risposta sbagliata. La risposta corretta è: " + correctAnswer);
