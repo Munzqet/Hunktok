@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -44,19 +44,6 @@
             }
         ];
 
-              function shuffleArray(array) {
-            for (var i = array.length - 1; i > 0; i--) {
-                var j = Math.floor(Math.random() * (i + 1));
-                var temp = array[i];
-                array[i] = array[j];
-                array[j] = temp;
-            }
-            return array;
-        }
-
-        // Mescola l'array delle domande
-        questions = shuffleArray(questions);
-
         var currentQuestionIndex = 0;
         var correctAnswers = 0;
         var totalQuestions = questions.length;
@@ -83,69 +70,6 @@
                 quizDiv.appendChild(optionElement);
             });
         }
-
-        function checkUserAnswer(userAnswer) {
-            if (quizEnded) return;
-            
-            var currentQuestion = questions[currentQuestionIndex];
-            userAnswers.push({question: currentQuestion.question, userAnswer: userAnswer});
-            if (userAnswer === currentQuestion.answer) {
-                correctAnswers++;
-            }
-            currentQuestionIndex++;
-            if (currentQuestionIndex < totalQuestions) {
-                loadQuestion();
-            } else {
-                showScore();
-            }
-        }
-
-        function showScore() {
-            var scoreDiv = document.getElementById("score");
-            scoreDiv.textContent = "Hai risposto correttamente a " + correctAnswers + " domande su " + totalQuestions + ".";
-            scoreDiv.style.display = "block";
-            showAnswers();
-        }
-
-        function showAnswers() {
-            var answersDiv = document.getElementById("answers");
-            var answersString = "<h2>Risposte Corrette:</h2>";
-            questions.forEach(function(question) {
-                var userAnswer = userAnswers.find(function(ans) {
-                    return ans.question === question.question;
-                });
-                var answerClass = "";
-                if (userAnswer) {
-                    answerClass = userAnswer.userAnswer !== question.answer ? " class='incorrect'" : "";
-                    var userWrongClass = userAnswer.userAnswer !== question.answer ? " class='user-wrong'" : "";
-                    answersString += "<p" + answerClass + "><strong>" + question.question + "</strong>: " + question.answer + (userAnswer.userAnswer !== question.answer ? " (Hai risposto erroneamente: <span" + userWrongClass + ">" + userAnswer.userAnswer + "</span>)" : "") + "</p>";
-                } else {
-                    answersString += "<p><strong>" + question.question + "</strong>: " + question.answer + "</p>";
-                }
-            });
-            answersDiv.innerHTML = answersString;
-            answersDiv.style.display = "block";
-        }
-
-        function endQuiz() {
-            quizEnded = true;
-            showScore();
-        }
-
-        loadQuestion();
-    </script>
-</body>
-</html>
-In questo codice, ho aggiunto una funzione shuffleArray() che mescola l'array delle domande prima di iniziare il quiz. In questo modo, l'ordine delle domande sarà casuale ogni volta che si carica la pagina.
-
-
-
-
-
-
-Message ChatGPT…
-
-ChatGPT can make mistakes. Consider checking important 
 
         function checkUserAnswer(userAnswer) {
             if (quizEnded) return;
