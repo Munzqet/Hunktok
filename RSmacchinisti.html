@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -70,7 +70,7 @@
         <h1 class="nome">
           <a href="index.html">QuizFer</a>
         </h1>
-        <h3 class="titolo" >QuizFer per il RS</h3>
+        <h3 class="titolo">QuizFer per il RS</h3>
         <div id="quiz"></div>
         <div class="button-container">
             <button class="quiz-button" onclick="endQuiz()">Termina Quiz</button>
@@ -80,7 +80,7 @@
     </div>
     
     <script type="text/javascript">
-        var questions = [
+        const questions = [
             {
                 question: "Quanto fa 2 + 2?",
                 options: ["3", "4", "5", "6"],
@@ -98,53 +98,45 @@
             }
         ];
 
-        // Funzione per mescolare un array
-        function shuffleArray(array) {
-            for (var i = array.length - 1; i > 0; i--) {
-                var j = Math.floor(Math.random() * (i + 1));
-                var temp = array[i];
-                array[i] = array[j];
-                array[j] = temp;
+        const shuffleArray = array => {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
             }
             return array;
-        }
+        };
 
-        // Mescola l'array delle domande
-        questions = shuffleArray(questions);
+        let currentQuestionIndex = 0;
+        let correctAnswers = 0;
+        let totalQuestions = questions.length;
+        let userAnswers = [];
+        let quizEnded = false;
 
-        var currentQuestionIndex = 0;
-        var correctAnswers = 0;
-        var totalQuestions = questions.length;
-        var userAnswers = [];
-        var quizEnded = false;
-
-        function loadQuestion() {
+        const loadQuestion = () => {
             if (quizEnded) return;
             
-            var quizDiv = document.getElementById("quiz");
+            const quizDiv = document.getElementById("quiz");
             quizDiv.innerHTML = "";
 
-            var currentQuestion = questions[currentQuestionIndex];
-            var questionElement = document.createElement("div");
+            const currentQuestion = questions[currentQuestionIndex];
+            const questionElement = document.createElement("div");
             questionElement.textContent = currentQuestion.question;
             quizDiv.appendChild(questionElement);
 
-            currentQuestion.options.forEach(function(option, index) {
-                var optionElement = document.createElement("button");
+            currentQuestion.options.forEach(option => {
+                const optionElement = document.createElement("button");
                 optionElement.textContent = option;
                 optionElement.classList.add("quiz-button");
-                optionElement.onclick = function() {
-                    checkUserAnswer(option);
-                };
+                optionElement.onclick = () => checkUserAnswer(option);
                 quizDiv.appendChild(optionElement);
             });
-        }
+        };
 
-        function checkUserAnswer(userAnswer) {
+        const checkUserAnswer = userAnswer => {
             if (quizEnded) return;
             
-            var currentQuestion = questions[currentQuestionIndex];
-            userAnswers.push({question: currentQuestion.question, userAnswer: userAnswer});
+            const currentQuestion = questions[currentQuestionIndex];
+            userAnswers.push({question: currentQuestion.question, userAnswer});
             if (userAnswer === currentQuestion.answer) {
                 correctAnswers++;
             }
@@ -153,39 +145,37 @@
                 loadQuestion();
             } else {
                 showScore();
-           
-            loadQuestion();
-        }
+                loadQuestion();
+            }
+        };
 
-        function showScore() {
-            var scoreDiv = document.getElementById("score");
-            scoreDiv.textContent = "Hai risposto correttamente a " + correctAnswers + " domande su " + totalQuestions + ".";
+        const showScore = () => {
+            const scoreDiv = document.getElementById("score");
+            scoreDiv.textContent = `Hai risposto correttamente a ${correctAnswers} domande su ${totalQuestions}.`;
             scoreDiv.style.display = "block";
             showAnswers();
-        }
+        };
 
-        function showAnswers() {
-            var answersDiv = document.getElementById("answers");
-            var answersString = "<h2>Risposte Corrette:</h2>";
-            userAnswers.forEach(function(userAnswer) {
-                var question = questions.find(function(question) {
-                    return question.question === userAnswer.question;
-                });
+        const showAnswers = () => {
+            const answersDiv = document.getElementById("answers");
+            let answersString = "<h2>Risposte Corrette:</h2>";
+            userAnswers.forEach(userAnswer => {
+                const question = questions.find(q => q.question === userAnswer.question);
                 if (question) {
-                    var answerClass = userAnswer.userAnswer !== question.answer ? " class='incorrect'" : "";
-                    var userWrongClass = userAnswer.userAnswer !== question.answer ? " class='user-wrong'" : "";
-                    answersString += "<p" + answerClass + "><strong>" + userAnswer.question + "</strong>: " + question.answer + (userAnswer.userAnswer !== question.answer ? " (Hai risposto erroneamente: <span" + userWrongClass + ">" + userAnswer.userAnswer + "</span>)" : "") + "</p>";
+                    const answerClass = userAnswer.userAnswer !== question.answer ? " class='incorrect'" : "";
+                    const userWrongClass = userAnswer.userAnswer !== question.answer ? " class='user-wrong'" : "";
+                    answersString += `<p${answerClass}><strong>${userAnswer.question}</strong>: ${question.answer}${userAnswer.userAnswer !== question.answer ? ` (Hai risposto erroneamente: <span${userWrongClass}>${userAnswer.userAnswer}</span>)` : ""}</p>`;
                 }
             });
             answersDiv.innerHTML = answersString;
             answersDiv.style.display = "block";
-        }
+        };
 
-        function endQuiz() {
+        const endQuiz = () => {
             quizEnded = true;
-            totalQuestions = userAnswers.length; // Aggiorna il numero totale di domande al numero di domande svolte dall'utente
+            totalQuestions = userAnswers.length;
             showScore();
-        }
+        };
 
         loadQuestion();
     </script>
