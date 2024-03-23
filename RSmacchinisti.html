@@ -1,78 +1,69 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QuizFer</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz di Domande Casuali</title>
 </head>
 <body>
-<h1 class="titolo">Esercizi RS</h1>
-<div id="quiz">
-</div>
+    <h1>Quiz di Domande Casuali</h1>
+    
+    <script type="text/javascript">
+        var questions = [
+            {
+                question: "Quanto fa 2 + 2?",
+                options: ["3", "4", "5", "6"],
+                answer: "4"
+            },
+            {
+                question: "Qual è la capitale dell'Italia?",
+                options: ["Roma", "Milano", "Firenze", "Napoli"],
+                answer: "Roma"
+            },
+            {
+                question: "Quale pianeta è più vicino al Sole?",
+                options: ["Terra", "Venere", "Mercurio", "Marte"],
+                answer: "Mercurio"
+            }
+        ];
 
-<script>
-// Array di domande con risposte
-var questions = [
-  {
-    question: "Quanto fa 2 + 2?",
-    options: ["3", "4", "5", "6"],
-    answer: "4"
-  },
-  {
-    question: "Qual è la capitale dell'Italia?",
-    options: ["Roma", "Milano", "Firenze", "Napoli"],
-    answer: "Roma"
-  },
-  {
-    question: "Quale pianeta è più vicino al Sole?",
-    options: ["Terra", "Venere", "Mercurio", "Marte"],
-    answer: "Mercurio"
-  }
-];
+        var correctAnswers = 0;
+        var totalQuestions = questions.length;
+        var showAnswers = false;
 
-// Funzione per caricare una domanda casuali
-function loadQuestion() {
-  var quiz = document.getElementById("quiz");
-  var randomIndex = Math.floor(Math.random() * questions.length);
-  var randomQuestion = questions[randomIndex];
-  var questionHTML = "<div class='question'>" + randomQuestion.question + "</div>";
-  var optionsHTML = "<ul class='options'>";
-  randomQuestion.options.forEach(function(option) {
-    optionsHTML += "<li><label><input type='radio' name='answer' value='" + option + "'>" + option + "</label></li>";
-  });
+        for (var i = 0; i < totalQuestions; i++) {
+            var question = questions[i];
+            console.log(question.question);
+            console.log(question.options);
+            var userInput = prompt(question.question + "\n" + question.options.join("\n") + "\nInserisci il numero corrispondente alla risposta (o premi 'q' per terminare il quiz):");
 
-  optionsHTML += "</ul>";
+            if (userInput === null || userInput.trim().toLowerCase() === "q") {
+                showAnswers = true;
+                break;
+            }
 
-  quiz.innerHTML = questionHTML + optionsHTML;
-}
+            var userChoice = parseInt(userInput);
+            if (!isNaN(userChoice) && userChoice >= 1 && userChoice <= question.options.length) {
+                var userAnswer = question.options[userChoice - 1];
+                if (userAnswer === question.answer) {
+                    correctAnswers++;
+                } else {
+                }
+            } else {
+                console.log("Scelta non valida.");
+            }
+            console.log("");
+        }
 
-// Funzione per verificare la risposta
-function checkAnswer() {
-  var selectedOption = document.querySelector('input[name="answer"]:checked');
-  if (!selectedOption) {
-    alert("Seleziona una risposta.");
-    return;
-  }
+        console.log("Hai risposto correttamente a " + correctAnswers + " domande su " + totalQuestions + ".");
 
-  var userAnswer = selectedOption.value;
-  var correctAnswer = questions.find(function(question) {
-    return question.question === document.querySelector('.question').textContent;
-  }).answer;
-
-  if (userAnswer === correctAnswer) {
-    alert("Risposta corretta!");
-  } else {
-    alert("Risposta sbagliata. La risposta corretta è: " + correctAnswer);
-  }
-<button onclick="nextQuestion()">Domanda Successiva</button>
-<button onclick="finishQuiz()">Termina Quiz</button>
-
-  // Carica una nuova domanda dopo 1 secondo
-  setTimeout(loadQuestion, 1000);
-}
-
-// Carica la prima domanda all'avvio
-loadQuestion();
-</script>
+        if (showAnswers) {
+            console.log("Ecco le risposte corrette:");
+            for (var j = 0; j < totalQuestions; j++) {
+                var q = questions[j];
+                console.log(q.question + ": " + q.answer);
+            }
+        }
+    </script>
 </body>
 </html>
