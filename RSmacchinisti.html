@@ -1,4 +1,4 @@
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -39,6 +39,7 @@
         var currentQuestionIndex = 0;
         var correctAnswers = 0;
         var totalQuestions = questions.length;
+        var userAnswers = [];
         var quizEnded = false;
 
         function loadQuestion() {
@@ -56,20 +57,19 @@
                 var optionElement = document.createElement("button");
                 optionElement.textContent = option;
                 optionElement.onclick = function() {
-                    checkUserAnswer(option, optionElement);
+                    checkUserAnswer(option);
                 };
                 quizDiv.appendChild(optionElement);
             });
         }
 
-        function checkUserAnswer(userAnswer, optionElement) {
+        function checkUserAnswer(userAnswer) {
             if (quizEnded) return;
             
             var currentQuestion = questions[currentQuestionIndex];
+            userAnswers.push({question: currentQuestion.question, userAnswer: userAnswer});
             if (userAnswer === currentQuestion.answer) {
                 correctAnswers++;
-            } else {
-                optionElement.classList.add("incorrect");
             }
             currentQuestionIndex++;
             if (currentQuestionIndex < totalQuestions) {
@@ -90,9 +90,10 @@
             var answersDiv = document.getElementById("answers");
             var answersString = "<h2>Risposte Corrette:</h2>";
             questions.forEach(function(question) {
-                var answerClass = question.options.some(function(option) {
-                    return option === question.answer;
-                }) ? "" : " class='incorrect'";
+                var userAnswer = userAnswers.find(function(ans) {
+                    return ans.question === question.question;
+                });
+                var answerClass = userAnswer && userAnswer.userAnswer !== question.answer ? " class='incorrect'" : "";
                 answersString += "<p" + answerClass + "><strong>" + question.question + "</strong>: " + question.answer + "</p>";
             });
             answersDiv.innerHTML = answersString;
@@ -108,4 +109,3 @@
     </script>
 </body>
 </html>
-       
