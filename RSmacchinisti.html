@@ -48,7 +48,8 @@
 </hr>
     <h3 class="titolo" >QuizFer per il RS</h3>
     <div id="quiz"></div>
-    <button onclick="endQuiz()">Termina Quiz</button>
+    <div class="button-container"><button class="quiz-button" onclick="endQuiz()">Termina Quiz</button>
+    </div>
     <div id="score" style="display: none;"></div>
     <div id="answers" style="display: none;"></div>
     
@@ -105,6 +106,7 @@
             currentQuestion.options.forEach(function(option, index) {
                 var optionElement = document.createElement("button");
                 optionElement.textContent = option;
+                optionElement.classList.add("quiz-button");
                 optionElement.onclick = function() {
                     checkUserAnswer(option);
                 };
