@@ -1,6 +1,7 @@
 .nome a,
 .nome a:visited {
     color: #ffffff;
+    background-color: #e83f15;
     text-decoration: none;
 }
 .titolo {
