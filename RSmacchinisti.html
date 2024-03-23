@@ -127,6 +127,7 @@
 
         function endQuiz() {
             quizEnded = true;
+            totalQuestions = userAnswers.length; // Aggiorna il numero totale di domande al numero di domande svolte dall'utente
             showScore();
         }
 
