@@ -111,16 +111,14 @@
         function showAnswers() {
             var answersDiv = document.getElementById("answers");
             var answersString = "<h2>Risposte Corrette:</h2>";
-            questions.forEach(function(question) {
-                var userAnswer = userAnswers.find(function(ans) {
-                    return ans.question === question.question;
+            userAnswers.forEach(function(userAnswer) {
+                var question = questions.find(function(question) {
+                    return question.question === userAnswer.question;
                 });
-                var answerClass = "";
-                if (userAnswer) {
-                    answerClass = userAnswer.userAnswer !== question.answer ? " class='incorrect'" : "";
-                    answersString += "<p" + answerClass + "><strong>" + question.question + "</strong>: " + question.answer + (userAnswer.userAnswer !== question.answer ? " (Hai risposto erroneamente: <span class='user-wrong'>" + userAnswer.userAnswer + "</span>)" : "") + "</p>";
-                } else {
-                    answersString += "<p><strong>" + question.question + "</strong>: " + question.answer + "</p>";
+                if (question) {
+                    var answerClass = userAnswer.userAnswer !== question.answer ? " class='incorrect'" : "";
+                    var userWrongClass = userAnswer.userAnswer !== question.answer ? " class='user-wrong'" : "";
+                    answersString += "<p" + answerClass + "><strong>" + userAnswer.question + "</strong>: " + question.answer + (userAnswer.userAnswer !== question.answer ? " (Hai risposto erroneamente: <span" + userWrongClass + ">" + userAnswer.userAnswer + "</span>)" : "") + "</p>";
                 }
             });
             answersDiv.innerHTML = answersString;
