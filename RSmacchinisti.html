@@ -6,6 +6,13 @@
     <link rel="stylesheet" href="global.css">
     <title>QuizFer</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        h1 {
+            margin-bottom: 20px;
         }
         .quiz-button {
             padding: 10px 20px;
@@ -16,6 +23,11 @@
             color: white;
             text-align: center;
             text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .quiz-button:hover {
+            background-color: #444;
         }
         .button-container {
             text-align: center;
@@ -50,110 +62,7 @@
         <div id="answers" style="display: none;"></div>
     </div>  
     <script type="text/javascript">
-        const questions = [
-            {
-                question: "Quanti piedi ha Elisa?",
-                options: ["2", "4", "5", "19"],
-                answer: "2"
-            },
-            {
-                question: "Qual è la capitale dell'Italia?",
-                options: ["Roma", "Milano", "Firenze", "Napoli"],
-                answer: "Roma"
-            },
-            {
-                question: "Quale pianeta è più vicino al Sole?",
-                options: ["Terra", "Venere", "Mercurio", "Marte"],
-                answer: "Mercurio"
-            }
-        ];
-
-        const shuffleArray = array => {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        };
-
-        let currentQuestionIndex = 0;
-        let correctAnswers = 0;
-        let totalQuestions = questions.length;
-        let userAnswers = [];
-        let quizEnded = false;
-
-        const loadQuestion = () => {
-            if (quizEnded) return;
-            
-            const quizDiv = document.getElementById("quiz");
-            quizDiv.innerHTML = "";
-
-            const currentQuestion = questions[currentQuestionIndex];
-            const questionElement = document.createElement("div");
-            questionElement.textContent = currentQuestion.question;
-            quizDiv.appendChild(questionElement);
-
-            currentQuestion.options.forEach(option => {
-                const optionElement = document.createElement("button");
-                optionElement.textContent = option;
-                optionElement.classList.add("quiz-button");
-                optionElement.onclick = () => checkUserAnswer(option);
-                quizDiv.appendChild(optionElement);
-            });
-        };
-
-        const checkUserAnswer = userAnswer => {
-            if (quizEnded) return;
-            
-            const currentQuestion = questions[currentQuestionIndex];
-            userAnswers.push({question: currentQuestion.question, userAnswer});
-            if (userAnswer === currentQuestion.answer) {
-                correctAnswers++;
-            }
-            currentQuestionIndex++;
-            if (currentQuestionIndex < totalQuestions) {
-                loadQuestion();
-            } else {
-                showScore();
-            }
-        };
-
-        const showScore = () => {
-            const scoreDiv = document.getElementById("score");
-            scoreDiv.innerHTML = `<span class="score-text"> Hai risposto correttamente a ${correctAnswers} domande su ${totalQuestions}.</span>`;
-            scoreDiv.style.display = "block";
-            showAnswers();
-            document.getElementById("endButton").style.display = "none";
-            document.getElementById("startButton").style.display = "none";
-            document.getElementById("restartButton").style.display = "inline-block";
-        };
-
-        const showAnswers = () => {
-            const answersDiv = document.getElementById("answers");
-            let answersString = "<h2>Risposte Corrette:</h2>";
-            userAnswers.forEach(userAnswer => {
-                const question = questions.find(q => q.question === userAnswer.question);
-                if (question) {
-                    const answerClass = userAnswer.userAnswer !== question.answer
-? " class='incorrect'" : "";
-                    const userWrongClass = userAnswer.userAnswer !== question.answer ? " class='user-wrong'" : "";
-                    answersString += `<p${answerClass}><strong>${userAnswer.question}</strong>: ${question.answer}${userAnswer.userAnswer !== question.answer ? ` (Hai risposto erroneamente: <span${userWrongClass}>${userAnswer.userAnswer}</span>)` : ""}</p>`;
-                }
-            });
-            answersDiv.innerHTML = answersString;
-            answersDiv.style.display = "block";
-        };
-
-        const startQuiz = () => {
-            quizEnded = false;
-            currentQuestionIndex = 0;
-            correctAnswers = 0;
-            userAnswers = [];
-            shuffleArray(questions);
-            loadQuestion();
-            document.getElementById("startButton").style.display = "none";
-            document.getElementById("endButton").style.display = "inline-block";
-            document.getElementById("restartButton").style.display = "none";
+        document.getElementById("restartButton").style.display = "none";
             document.getElementById("score").style.display = "none";
             document.getElementById("answers").style.display = "none";
         };
@@ -175,8 +84,6 @@
             document.getElementById("endButton").style.display = "inline-block";
             document.getElementById("score").style.display = "none";
             document.getElementById("answers").style.display = "none";
-        };
-
     </script>
 </body>
 </html>
